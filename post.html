@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Baca Manhwa - Azure</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body{margin:0;background:#000;color:#fff;font-family:sans-serif}
+header{text-align:center;padding:10px}
+.warn{background:#2a0000;padding:10px;color:#ff6b6b;text-align:center}
+.reader img{width:100%;display:block}
+.btn{padding:10px;margin:5px;background:#111;color:#4cc2ff;border:none;border-radius:6px}
+.comment{padding:10px}
+.box{background:#111;padding:10px;margin:5px;border-radius:6px}
+.reply{margin-left:20px;font-size:13px}
+.support{position:fixed;bottom:15px;right:15px;background:#ff4c9e;
+color:#fff;padding:15px;border-radius:50%;animation:pulse 1.5s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0}50%{box-shadow:0 0 15px #ff4c9e}}
+</style>
+</head>
+<body>
+
+<header>
+  <h3>Judul Komik</h3>
+</header>
+
+<!-- PERINGATAN KHUSUS SMUT -->
+<div class="warn">
+  ⚠️ Konten dewasa (Smut). Baca dengan bijak.
+</div>
+
+<div class="reader">
+  <!-- GAMBAR DARI GOOGLE DRIVE -->
+  <!-- <img src="https://drive.google.com/uc?id=FILE_ID"> -->
+</div>
+
+<center>
+  <button class="btn">◀ Prev</button>
+  <button class="btn">Next ▶</button>
+</center>
+
+<div class="comment">
+  <h4>Komentar</h4>
+  <input id="name" placeholder="Nama">
+  <textarea id="text" placeholder="Komentar"></textarea>
+  <button class="btn" onclick="send()">Kirim</button>
+  <div id="list"></div>
+</div>
+
+<!-- SUPPORT -->
+<div class="support" onclick="alert('DANA: 085600195762')">💖</div>
+
+<script>
+let data=JSON.parse(localStorage.getItem("komen")||"[]");
+function render(){
+  list.innerHTML="";
+  data.forEach((c,i)=>{
+    list.innerHTML+=`
+    <div class="box">
+      <b>${c.n}</b><p>${c.t}</p>
+      <button onclick="reply(${i})">Balas</button>
+      ${c.r?`<div class="reply">${c.r}</div>`:""}
+    </div>`
+  })
+}
+function send(){
+  data.push({n:name.value,t:text.value});
+  localStorage.setItem("komen",JSON.stringify(data));
+  render();
+}
+function reply(i){
+  const r=prompt("Balasan:");
+  data[i].r=r;
+  localStorage.setItem("komen",JSON.stringify(data));
+  render();
+}
+render();
+</script>
+
+</body>
+</html>
