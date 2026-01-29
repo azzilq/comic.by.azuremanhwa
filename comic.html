@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<title>Judul Komik - Azure Manhwa</title>
+<style>
+body{
+margin:0;
+background:#05070c;
+color:white;
+font-family:Arial;
+}
+header{
+padding:14px;
+text-align:center;
+font-size:22px;
+color:#7dd3fc;
+text-shadow:0 0 10px #38bdf8;
+}
+.cover{
+width:100%;
+border-radius:0 0 20px 20px;
+}
+.info{
+padding:12px;
+}
+.tag{
+display:inline-block;
+padding:4px 10px;
+margin:4px;
+border-radius:20px;
+background:#0b1220;
+font-size:12px;
+color:#7dd3fc;
+}
+.chapter{
+padding:12px;
+border-bottom:1px solid #0b1220;
+}
+.chapter a{
+color:white;
+text-decoration:none;
+}
+.read{
+display:flex;
+gap:10px;
+padding:12px;
+}
+.read button{
+flex:1;
+padding:10px;
+border:none;
+border-radius:12px;
+font-size:14px;
+}
+.first{background:#0b1220;color:#7dd3fc;}
+.last{background:#7c1d1d;color:white;}
+.warning{
+margin:10px;
+padding:10px;
+background:#2a0f15;
+border-left:4px solid red;
+border-radius:8px;
+font-size:13px;
+}
+</style>
+</head>
+<body>
+
+<header>Judul Komik</header>
+
+<img src="https://via.placeholder.com/400x600" class="cover">
+
+<div class="warning">
+⚠ Konten dewasa. Tidak disarankan untuk pembaca di bawah umur.
+</div>
+
+<div class="info">
+<span class="tag">Romance</span>
+<span class="tag">Josei</span>
+<span class="tag">Adult</span>
+</div>
+
+<div class="read">
+<button class="first" onclick="location.href='reader.html'">Read First</button>
+<button class="last" onclick="location.href='reader.html'">Read Last</button>
+</div>
+
+<div class="chapter">
+<a href="reader.html">Chapter 1</a>
+</div>
+<div class="chapter">
+<a href="reader.html">Chapter 2</a>
+</div>
+<div class="chapter">
+<a href="reader.html">Chapter 3</a>
+</div>
+
+</body>
+</html>
