@@ -24,6 +24,22 @@ display:grid;
 grid-template-columns:repeat(3,1fr);
 gap:10px;
 padding:10px;
+  <input id="search" placeholder="Cari komik..."
+style="width:90%;margin:10px;padding:8px;border-radius:10px">
+
+<select id="genre" style="margin:10px;padding:8px">
+<option>All</option>
+<option>Action</option>
+<option>Romance</option>
+<option>Drama</option>
+<option>Fantasy</option>
+<option>Josei</option>
+<option>Adult</option>
+<option>Comedy</option>
+<option>Horror</option>
+<option>Isekai</option>
+<option>Full Color</option>
+</select>
 }
 .card{
 background:#0b1220;
@@ -64,5 +80,20 @@ a{color:#7dd3fc;text-decoration:none;font-size:12px}
 <a href="support.html">Traktir</a>
 </nav>
 
+  <a href="reader.html">
+  <div class="card">Coming Soon</div>
+  </a>
+  
+  <script>
+const cards = document.querySelectorAll(".card");
+document.getElementById("search").oninput = function(){
+cards.forEach(c=>{
+c.style.display =
+c.innerText.toLowerCase().includes(this.value.toLowerCase())
+? "block":"none";
+});
+}
+  </script>
+  
 </body>
 </html>
