@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Read - Azure Manhwa</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body{
+margin:0;
+background:#05070c;
+color:white;
+font-family:Arial;
+}
+header{
+text-align:center;
+padding:12px;
+color:#7dd3fc;
+text-shadow:0 0 10px #38bdf8;
+}
+.page{
+width:100%;
+margin-bottom:6px;
+}
+.nav{
+display:flex;
+justify-content:space-between;
+padding:10px;
+}
+button{
+background:#0b1220;
+color:#7dd3fc;
+border:none;
+padding:10px 18px;
+border-radius:12px;
+box-shadow:0 0 10px rgba(56,189,248,.3);
+}
+.warning{
+margin:10px;
+padding:10px;
+background:#2a0f15;
+border-left:4px solid red;
+border-radius:8px;
+font-size:13px;
+}
+</style>
+</head>
+<body>
+
+<header>Azure Manhwa</header>
+
+<div class="warning">
+⚠ Konten dewasa (Smut). Tidak disarankan untuk pembaca di bawah umur.
+</div>
+
+<!-- GAMBAR DARI GOOGLE DRIVE -->
+<img class="page" src="https://drive.google.com/uc?id=GANTI_ID_1">
+<img class="page" src="https://drive.google.com/uc?id=GANTI_ID_2">
+<img class="page" src="https://drive.google.com/uc?id=GANTI_ID_3">
+
+<div class="nav">
+<button onclick="alert('Prev chapter')">◀ Prev</button>
+<button onclick="alert('Next chapter')">Next ▶</button>
+</div>
+
+<hr>
+
+<h3 style="padding-left:10px">Komentar</h3>
+
+<input id="nama" placeholder="Nama" style="width:90%;margin:5px">
+<textarea id="komen" placeholder="Komentar..." style="width:90%;margin:5px"></textarea>
+<button onclick="kirim()">Kirim</button>
+
+<div id="list" style="padding:10px"></div>
+
+<script>
+let data = JSON.parse(localStorage.getItem("komentar")) || [];
+
+function kirim(){
+let n = nama.value || "Anonim";
+let k = komen.value;
+data.push(n+": "+k);
+localStorage.setItem("komentar",JSON.stringify(data));
+render();
+komen.value="";
+}
+
+function render(){
+list.innerHTML="";
+data.forEach(c=>{
+list.innerHTML += "<p>💬 "+c+"</p>";
+});
+}
+render();
+</script>
+
+</body>
+</html>
