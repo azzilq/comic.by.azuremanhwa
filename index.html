@@ -4,50 +4,96 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Azure Manhwa</title>
+
 <meta name="description" content="Azure Manhwa - Baca manhwa gratis">
+<meta name="robots" content="index, follow">
+
 <style>
 body{
 margin:0;
 background:#05070c;
 color:#e5e7eb;
-font-family:Arial;
+font-family:Arial, sans-serif;
 }
+
+/* HEADER */
 header{
-padding:15px;
 text-align:center;
+padding:14px;
 font-size:26px;
 color:#7dd3fc;
 text-shadow:0 0 12px #38bdf8;
 }
+
+/* SEARCH */
+.search{
+width:90%;
+margin:10px auto;
+display:block;
+padding:10px;
+border-radius:12px;
+border:none;
+}
+
+/* GRID KOMIK */
 .grid{
 display:grid;
 grid-template-columns:repeat(3,1fr);
 gap:10px;
 padding:10px;
-  <input id="search" placeholder="Cari komik..."
-style="width:90%;margin:10px;padding:8px;border-radius:10px">
-
-<select id="genre" style="margin:10px;padding:8px">
-<option>All</option>
-<option>Action</option>
-<option>Romance</option>
-<option>Drama</option>
-<option>Fantasy</option>
-<option>Josei</option>
-<option>Adult</option>
-<option>Comedy</option>
-<option>Horror</option>
-<option>Isekai</option>
-<option>Full Color</option>
-</select>
 }
 .card{
 background:#0b1220;
-border-radius:12px;
-padding:40px 10px;
+border-radius:14px;
+padding:30px 8px;
 text-align:center;
-box-shadow:0 0 10px rgba(56,189,248,.15);
+box-shadow:0 0 12px rgba(56,189,248,.15);
 }
+
+/* FILTER */
+#filter{
+display:none;
+padding:10px;
+font-size:13px;
+}
+
+/* WARNING */
+.warning{
+margin:10px;
+padding:10px;
+background:#2a0f15;
+border-left:4px solid red;
+border-radius:8px;
+font-size:13px;
+}
+
+/* READER */
+.page{
+width:100%;
+margin-bottom:6px;
+}
+
+/* BUTTON */
+button{
+background:#0b1220;
+color:#7dd3fc;
+border:none;
+padding:10px 16px;
+border-radius:12px;
+margin:5px;
+box-shadow:0 0 10px rgba(56,189,248,.3);
+}
+
+/* KOMENTAR */
+textarea,input{
+width:90%;
+margin:5px;
+padding:8px;
+border-radius:10px;
+border:none;
+}
+
+/* NAV */
 nav{
 position:fixed;
 bottom:0;
@@ -57,43 +103,137 @@ display:flex;
 justify-content:space-around;
 padding:8px 0;
 }
-a{color:#7dd3fc;text-decoration:none;font-size:12px}
+nav span{
+font-size:12px;
+color:#7dd3fc;
+cursor:pointer;
+}
 </style>
 </head>
+
 <body>
 
 <header>Azure Manhwa</header>
 
-<div class="grid">
-<div class="card">Coming Soon</div>
-<div class="card">Coming Soon</div>
-<div class="card">Coming Soon</div>
-<div class="card">Coming Soon</div>
-<div class="card">Coming Soon</div>
-<div class="card">Coming Soon</div>
+<input class="search" id="search" placeholder="Cari komik...">
+
+<button onclick="toggleFilter()">Filter Genre</button>
+
+<div id="filter"></div>
+
+<!-- DAFTAR KOMIK -->
+<div class="grid" id="list">
+<div class="card" onclick="openComic()">Judul Komik</div>
+<div class="card" onclick="openComic()">Coming Soon</div>
+<div class="card" onclick="openComic()">Coming Soon</div>
+<div class="card" onclick="openComic()">Coming Soon</div>
+<div class="card" onclick="openComic()">Coming Soon</div>
+<div class="card" onclick="openComic()">Coming Soon</div>
+</div>
+
+<!-- HALAMAN KOMIK -->
+<div id="comic" style="display:none">
+
+<div class="warning">
+⚠ Konten dewasa (Smut). Tidak disarankan untuk pembaca di bawah umur.
+</div>
+
+<button onclick="openReader()">Read First</button>
+<button onclick="openReader()">Read Last</button>
+
+<p style="padding:10px">Chapter List</p>
+<p style="padding-left:10px">Chapter 1</p>
+<p style="padding-left:10px">Chapter 2</p>
+
+</div>
+
+<!-- READER -->
+<div id="reader" style="display:none">
+
+<img class="page" src="https://drive.google.com/uc?id=GANTI_ID_1">
+<img class="page" src="https://drive.google.com/uc?id=GANTI_ID_2">
+
+<button onclick="alert('Prev Chapter')">◀ Prev</button>
+<button onclick="alert('Next Chapter')">Next ▶</button>
+
+<h3>Komentar</h3>
+<input id="nama" placeholder="Nama">
+<textarea id="komen" placeholder="Komentar..."></textarea>
+<button onclick="kirim()">Kirim</button>
+
+<div id="komenList"></div>
+
 </div>
 
 <nav>
-<a href="#">Beranda</a>
-<a href="#">Filter</a>
-<a href="#">Random</a>
-<a href="support.html">Traktir</a>
+<span onclick="goHome()">Beranda</span>
+<span onclick="toggleFilter()">Filter</span>
+<span onclick="openReader()">Reader</span>
+<span onclick="openSupport()">Traktir</span>
 </nav>
 
-  <a href="reader.html">
-  <div class="card">Coming Soon</div>
-  </a>
-  
-  <script>
-const cards = document.querySelectorAll(".card");
-document.getElementById("search").oninput = function(){
-cards.forEach(c=>{
-c.style.display =
-c.innerText.toLowerCase().includes(this.value.toLowerCase())
-? "block":"none";
+<script>
+/* FILTER GENRE */
+const genres=[
+"Action","Adult","Romance","Drama","Fantasy","Josei","Comedy",
+"Horror","Isekai","Full Color","Ecchi","School","Slice of Life",
+"Thriller","Tragedy","Supernatural","Sports","Webtoon","Manhwa",
+"Manhua","Manga","Cultivation","Wuxia","Xianxia","Yuri","Yaoi"
+];
+
+function toggleFilter(){
+let f=document.getElementById("filter");
+f.style.display = f.style.display=="none"?"block":"none";
+f.innerHTML="";
+genres.forEach(g=>{
+f.innerHTML+=`<label><input type="checkbox"> ${g}</label><br>`;
 });
 }
-  </script>
-  
+
+/* NAVIGASI */
+function openComic(){
+list.style.display="none";
+comic.style.display="block";
+}
+function openReader(){
+comic.style.display="none";
+reader.style.display="block";
+}
+function goHome(){
+list.style.display="grid";
+comic.style.display="none";
+reader.style.display="none";
+}
+function openSupport(){
+alert("DANA 085600195762\nTerima kasih sudah support 💙");
+}
+
+/* SEARCH */
+search.oninput=function(){
+document.querySelectorAll(".card").forEach(c=>{
+c.style.display=c.innerText.toLowerCase().includes(this.value.toLowerCase())?"block":"none";
+});
+}
+
+/* KOMENTAR */
+let data=JSON.parse(localStorage.getItem("komen"))||[];
+function kirim(){
+let n=nama.value||"Anonim";
+let k=komen.value;
+data.push(n+": "+k);
+localStorage.setItem("komen",JSON.stringify(data));
+render();
+komen.value="";
+}
+function render(){
+komenList.innerHTML="";
+data.forEach(d=>{
+komenList.innerHTML+="<p>💬 "+d+"</p>";
+});
+}
+render();
+</script>
+
 </body>
-</html>
+  </html>
+  
